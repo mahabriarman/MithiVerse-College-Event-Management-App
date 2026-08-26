@@ -5,6 +5,10 @@ const Payment = require("../models/Payment");
 const ErrorResponse = require("../utils/errorResponse");
 
 exports.createOrder=asyncHandler(async (req,res,next)=>{
+
+    if (!razorpayInstance) {
+        return next(new ErrorResponse("Payment service is not configured",503));
+    }
     const {userId,eventId,amount}=req.body;
    
     if(!userId || !eventId || !amount){
